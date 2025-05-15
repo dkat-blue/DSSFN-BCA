@@ -1,6 +1,5 @@
 # src/model.py
 # Defines the main DSSFN model architecture, supporting different fusion mechanisms.
-# <<< MODIFICATION: Changed imports for modules and config to relative imports >>>
 
 import torch
 import torch.nn as nn
@@ -235,7 +234,7 @@ class DSSFN(nn.Module):
             final_combined_logits = (spec_logits + spatial_logits) / 2.0
 
             # Auxiliary losses expected by engine.py's AdaptiveWeight loss calculation.
-            # If your model has specific auxiliary calculations (e.g., consistency loss
+            # If the model has specific auxiliary calculations (e.g., consistency loss
             # between spectral and spatial branches before this point), compute them here.
             # Otherwise, returning 0.0 means these terms won't contribute to the gradient
             # via model.lambda_spec * aux_spec_loss, but the log_var terms will still work.

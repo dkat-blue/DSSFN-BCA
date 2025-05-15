@@ -151,13 +151,6 @@ def create_patches_from_coords(padded_data, coords_list, patch_size):
     border_offset = patch_size // 2 # Offset due to padding
 
     for coord in coords_list:
-        # Original coordinates (r,c) are the center of the patch in the original image
-        # To get the top-left corner in the *padded* image, we add border_offset
-        # and then subtract patch_size//2 (which is border_offset itself)
-        # So, r_padded_start = r_original + border_offset - patch_size//2 = r_original
-        # No, this is not quite right. The coords_list 'r' and 'c' are the *original*
-        # pixel coordinates. When we access `padded_data`, these original coordinates
-        # are now offset by `border_offset` (which is `patch_size // 2`).
         # The patch should be centered around `(r + border_offset, c + border_offset)` in the padded image.
         # So, the top-left corner of the patch in the padded image is:
         # r_start_padded = (r + border_offset) - patch_size // 2

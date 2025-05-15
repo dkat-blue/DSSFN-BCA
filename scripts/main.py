@@ -36,7 +36,6 @@ else:
     print(f"{module_path} already in sys.path")
 
 # --- Import Custom Modules ---
-# <<< MODIFICATION START: Correct imports to use 'src.' prefix >>>
 try:
     import src.config as cfg
     importlib.reload(cfg) # Reload config after potentially adding path
@@ -58,7 +57,6 @@ except ImportError as e:
     print(f"Check that '__init__.py' exists in 'src/'")
     print(f"Current sys.path: {sys.path}")
     raise
-# <<< MODIFICATION END >>>
 
 
 # --- Ignore specific warnings ---

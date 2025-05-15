@@ -484,14 +484,6 @@ if __name__ == "__main__":
                     else:
                         # --- Model Instantiation ---
                         logging.info("\n--- Instantiating the DSSFN model ---")
-                        # Model instantiation uses parameters from the run_cfg_dict
-                        # Need to ensure DSSFN uses these values correctly
-                        # Assuming DSSFN's __init__ primarily uses explicit args,
-                        # but it might read from cfg internally for INTERMEDIATE_ATTENTION_STAGES.
-                        # Let's pass them explicitly for safety if DSSFN doesn't read from cfg module.
-                        # *** Check DSSFN model code - it reads INTERMEDIATE_ATTENTION_STAGES from cfg module ***
-                        # *** We need to temporarily modify the imported cfg module or refactor DSSFN ***
-                        # *** Quick Fix: Modify the imported module's attribute temporarily ***
                         original_int_attn = base_cfg_module.INTERMEDIATE_ATTENTION_STAGES
                         original_fusion = base_cfg_module.FUSION_MECHANISM
                         base_cfg_module.INTERMEDIATE_ATTENTION_STAGES = run_cfg_dict['INTERMEDIATE_ATTENTION_STAGES']
@@ -576,11 +568,9 @@ if __name__ == "__main__":
             # Create DataFrame for detailed results
             df_detailed = pd.DataFrame(all_run_results)
 
-            # <<< MODIFICATION START: Fill NaN in 'Band Param' before aggregation >>>
             # Replace NaN in 'Band Param' (which occurs for 'None' method) with a placeholder string
             logging.info("Filling NaN in 'Band Param' column with 'N/A' for aggregation.")
             df_detailed['Band Param'] = df_detailed['Band Param'].fillna('N/A')
-            # <<< MODIFICATION END >>>
 
             # Save Detailed Results to CSV (with 'N/A' in Band Param for None method)
             detailed_csv_path = os.path.join(sweep_output_dir, f"sweep_combinations_detailed_results_{sweep_timestamp}.csv")

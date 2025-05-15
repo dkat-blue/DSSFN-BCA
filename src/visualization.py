@@ -1,6 +1,5 @@
 # src/visualization.py
 # Contains functions for plotting training history and classification maps.
-# <<< MODIFICATION: Changed import for config to relative import >>>
 
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
