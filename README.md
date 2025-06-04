@@ -65,7 +65,7 @@ data
 
 ### 1. Data Preparation
 
-* Place your Hyperspectral Image (HSI) datasets into the `data/` directory. These are organized by subdirectories (e.g., [=`data/ip/`](https://www.kaggle.com/datasets/abhijeetgo/indian-pines-hyperspectral-dataset), [`data/pu/`](https://www.kaggle.com/datasets/syamkakarla/pavia-university-hsi), [`data/botswana/`](https://www.kaggle.com/datasets/mingliu123/botswana)).
+* Place your Hyperspectral Image (HSI) datasets into the `data/` directory. These are organized by subdirectories (e.g., [`data/ip/`](https://www.kaggle.com/datasets/abhijeetgo/indian-pines-hyperspectral-dataset), [`data/pu/`](https://www.kaggle.com/datasets/syamkakarla/pavia-university-hsi), [`data/botswana/`](https://www.kaggle.com/datasets/mingliu123/botswana)).
 * Supported data formats are `.npy` (NumPy arrays) and `.mat` (MATLAB files).
 * For `.mat` files, ensure you know the variable names (keys) within the file that correspond to the data cube and the ground truth map. These keys will be needed for configuration.
 
