@@ -1,8 +1,71 @@
+# Modified DSSFN Architecture for Hyperspectral Image Classification
+
+This project implements a modified version of the DSSFN (Dual-Stream Self-Attention Fusion Network) architecture, based on the paper ["DSSFN: A Dual-Stream Self-Attention Fusion Network for Effective Hyperspectral Image Classification" (Yang et al., Remote Sensing 2023)](https://www.mdpi.com/2072-4292/15/15/3701), for the classification of Hyperspectral Images (HSI).
+
+## Overview
+
+Hyperspectral images contain rich spectral information, enabling detailed analysis of materials on the Earth's surface. This project utilizes deep learning to classify HSI pixels. The DSSFN architecture processes both spectral and spatial information using two parallel streams.
+
+**Key Components of the Original Architecture:**
+
+* **Dual-Stream:** One stream processes 1D spectral vectors, the other processes 2D spatial patches.
+* **Pyramidal Residual Blocks:** Used in both streams to extract features at different levels with residual connections.
+* **Self-Attention:** Integrated within the residual blocks to identify the importance of different parts of the spectral/spatial input.
+
+**Modifications in this Implementation:**
+
+* **Optional Intermediate Cross-Attention:** Allows adding `MultiHeadCrossAttention` layers between streams after intermediate stages (Stage 1 and/or Stage 2) for early information exchange.
+* **Configurable Fusion Mechanism:** Provides a choice between:
+    * `AdaptiveWeight`: Weights the outputs (logits) of each stream based on their current loss.
+    * `CrossAttention`: Uses `MultiHeadCrossAttention` to fuse the final features from both streams before a single classification layer.
+* **Learned Positional Embeddings:** Used in conjunction with cross-attention (intermediate and final).
+* **Flexible Band Selection:** Supports `SWGMF`, `E-FDPC` methods, or using all original bands.
+
+## Project Structure
+```
+📦 
+.gitignore
+README.md
+data
+│  ├─ botswana
+│  ├─ ip
+│  └─ pu
+├─ requirements.txt
+├─ results
+│  ├─ Botswana
+│  ├─ IndianPines
+│  └─ PaviaUniversity
+├─ scripts
+└─ src
+```
+## Requirements
+
+* Python 3.10+
+* PyTorch
+* NumPy
+* Scikit-learn
+* Matplotlib
+* Pandas (for sweep result tables)
+
+**Installation:**
+
+1.  **Create a Virtual Environment (Recommended):**
+    ```bash
+    python -m venv .venv
+    source .venv/bin/activate  # On Windows use `.venv\Scripts\activate`
+    ```
+2.  **Install Dependencies:**
+    Install the required packages using the provided `requirements.txt` file:
+    ```bash
+    pip install -r requirements.txt
+    ```
+    *(Ensure you have the correct base Python and pip versions. The `requirements.txt` file specifies exact versions used during development. You might need to install the correct PyTorch version separately based on your CUDA setup if the one in `requirements.txt` is not compatible: see https://pytorch.org/)*
+
 ## Usage
 
 ### 1. Data Preparation
 
-* Place your Hyperspectral Image (HSI) datasets into the `data/` directory. It's recommended to organize them into subdirectories named after the dataset (e.g., `data/IndianPines/`, `data/PaviaUniversity/`, `data/Botswana/`).
+* Place your Hyperspectral Image (HSI) datasets into the `data/` directory. These are organized by subdirectories (e.g., [=`data/ip/`](https://www.kaggle.com/datasets/abhijeetgo/indian-pines-hyperspectral-dataset), [`data/pu/`](https://www.kaggle.com/datasets/syamkakarla/pavia-university-hsi), [`data/botswana/`](https://www.kaggle.com/datasets/mingliu123/botswana)).
 * Supported data formats are `.npy` (NumPy arrays) and `.mat` (MATLAB files).
 * For `.mat` files, ensure you know the variable names (keys) within the file that correspond to the data cube and the ground truth map. These keys will be needed for configuration.
 
