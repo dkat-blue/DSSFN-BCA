@@ -25,7 +25,7 @@ OUTPUT_DIR = os.path.join(PROJECT_ROOT, 'results') # Base directory for all outp
 
 # --- Dataset Configuration ---
 # Change this to switch datasets for scripts like main.py
-DATASET_NAME = 'Botswana' # 'IndianPines', 'PaviaUniversity', 'Salinas', 'KennedySpaceCenter', 'Botswana'
+DATASET_NAME = 'IndianPines' # 'IndianPines', 'PaviaUniversity', 'Salinas', 'KennedySpaceCenter', 'Botswana'
 
 # --- Data Paths and Dataset-specific Parameters ---
 if DATASET_NAME == 'IndianPines':
@@ -125,10 +125,10 @@ else:
 DATA_PATH = os.path.join(DATA_BASE_PATH, DATA_PATH_RELATIVE)
 
 # --- Band Selection Parameters ---
-BAND_SELECTION_METHOD = 'None'
-SWGMF_TARGET_BANDS = 30 # Example, adjust as needed for Botswana if using SWGMF
+BAND_SELECTION_METHOD = 'E-FDPC' # 'SWGMF', 'E-FDPC', or 'None'
+SWGMF_TARGET_BANDS = 30 # Adjust as needed if using SWGMF
 SWGMF_WINDOW_SIZE = 5
-E_FDPC_DC_PERCENT = 2.0 # Example, adjust as needed for Botswana if using E-FDPC
+E_FDPC_DC_PERCENT = 2.5 # Adjust as needed if using E-FDPC
 
 # --- Patch Extraction Parameters ---
 PATCH_SIZE = 15 # Consider if this is appropriate for Botswana's spatial resolution

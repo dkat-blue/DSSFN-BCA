@@ -18,8 +18,8 @@ def plot_history(history):
     Plots the training and validation loss and accuracy curves.
 
     Args:
-        history (dict): Dictionary containing lists/arrays for 'train_loss', 'train_acc',
-                        'val_loss', 'val_acc'. Should handle None values if validation skipped.
+        history (dict): Dictionary containing lists/arrays for 'train_loss', 'train_accuracy',
+                        'val_loss', 'val_accuracy'. Should handle None values if validation skipped.
 
     Returns:
         tuple: (fig, axes) The matplotlib figure and axes objects. Returns (None, None) if no history.
@@ -29,8 +29,18 @@ def plot_history(history):
          return None, None # Return None if no history
 
     epochs = range(1, len(history.get('train_loss', [])) + 1)
-    has_val_data = 'val_loss' in history and history['val_loss'] and \
-                   all(v is not None for v in history['val_loss'])
+    
+    # Check for presence and validity of validation loss data
+    has_val_loss_data = 'val_loss' in history and \
+                        history['val_loss'] is not None and \
+                        len(history['val_loss']) > 0 and \
+                        all(v is not None for v in history['val_loss'])
+    
+    # Check for presence and validity of validation accuracy data
+    has_val_accuracy_data = 'val_accuracy' in history and \
+                            history['val_accuracy'] is not None and \
+                            len(history['val_accuracy']) > 0 and \
+                            all(v is not None for v in history['val_accuracy'])
 
     fig, axes = plt.subplots(1, 2, figsize=(12, 5)) # axes is now a numpy array [ax1, ax2]
     ax1 = axes[0]
@@ -40,7 +50,7 @@ def plot_history(history):
     # --- Plot Loss ---
     if history.get('train_loss'):
         ax1.plot(epochs, history['train_loss'], label='Train Loss', marker='.')
-    if has_val_data:
+    if has_val_loss_data:
         ax1.plot(epochs, history['val_loss'], label='Validation Loss', marker='.')
     ax1.set_title('Model Loss')
     ax1.set_ylabel('Loss')
@@ -49,15 +59,16 @@ def plot_history(history):
     ax1.grid(True)
 
     # --- Plot Accuracy ---
-    if history.get('train_acc'):
-        ax2.plot(epochs, history['train_acc'], label='Train Accuracy', marker='.')
-    if has_val_data:
-        ax2.plot(epochs, history['val_acc'], label='Validation Accuracy', marker='.')
+    if history.get('train_accuracy'): # train_accuracy key used in engine.py
+        ax2.plot(epochs, history['train_accuracy'], label='Train Accuracy', marker='.')
+    if has_val_accuracy_data:
+        # Corrected key from 'val_acc' to 'val_accuracy'
+        ax2.plot(epochs, history['val_accuracy'], label='Validation Accuracy', marker='.')
     ax2.set_title('Model Accuracy')
     ax2.set_ylabel('Accuracy')
     ax2.set_xlabel('Epoch')
     # Set y-axis limits for accuracy if desired (e.g., 0 to 1)
-    # ax2.set_ylim(bottom=0, top=1.05)
+    # ax2.set_ylim(bottom=0, top=1.05) 
     ax2.legend()
     ax2.grid(True)
 

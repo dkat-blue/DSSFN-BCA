@@ -141,11 +141,6 @@ data/
 /data/*
 !/data/.gitkeep # Optional: keep the folder structure
 
-# Results (generated during runs)
-results/
-/results/*
-!/results/.gitkeep # Optional: keep the folder structure
-
 # Notebooks (if any, can be large with outputs)
 notebooks/
 /notebooks/*
