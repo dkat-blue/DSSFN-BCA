@@ -24,3 +24,6 @@ data/botswana/*
 
 # Ignore the notebooks directory
 notebooks/
+
+# Ignore :Zone.Identifier files
+*:Zone.Identifier
