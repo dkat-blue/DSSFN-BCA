@@ -17,10 +17,17 @@ env/
 *.swp
 *.swo
 
-# Ignore dataset files within specific data folders, but keep the folders
+# keep data/ip/ directory structure, but ignore all its contents
 data/ip/*
+# except do not ignore the placeholder file
+!data/ip/.gitkeep
+
+# same for the other subfolders:
 data/pu/*
+!data/pu/.gitkeep
+
 data/botswana/*
+!data/botswana/.gitkeep
 
 # Ignore the notebooks directory
 notebooks/
